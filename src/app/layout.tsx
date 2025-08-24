@@ -1,8 +1,8 @@
 import { Onest } from 'next/font/google';
 import './globals.css';
 
-import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
+import SessionContext from '../context/SessionContext';
 
 const onest = Onest({
   subsets: ["latin"],
@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${onest.className} dark:bg-gray-900`}>
         <ThemeProvider>
-          <SidebarProvider>{children}</SidebarProvider>
+          <SessionContext>{children}</SessionContext>
         </ThemeProvider>
       </body>
     </html>

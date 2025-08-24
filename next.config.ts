@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+
+  images: {
+    domains: ["lh3.googleusercontent.com", "github.com", "avatars.githubusercontent.com", "cdn.discordapp.com"],
+  }
 };
 
 export default nextConfig;

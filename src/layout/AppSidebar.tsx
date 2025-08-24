@@ -1,21 +1,14 @@
 "use client";
+
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
-  BoxCubeIcon, CheckCircleIcon, ChevronDownIcon,
-  DocsIcon, DollarLineIcon, EnvelopeIcon, GridIcon,
-  GroupIcon,
-  HorizontaLDots,
-  InfoIcon,
-  ListIcon,
-  PageIcon, PieChartIcon,
-  PlugInIcon,
-  ShootingStarIcon,
-  TableIcon,
-  UserCircleIcon
+  CheckCircleIcon, ChevronDownIcon,
+  DocsIcon, DollarLineIcon, GridIcon, HorizontaLDots,
+  InfoIcon, ShootingStarIcon, UserCircleIcon
 } from "../icons/index";
 
 type NavItem = {
@@ -37,14 +30,17 @@ const navItems: NavItem[] = [
     path: "/calendar",
   },
   {
-    icon: <DollarLineIcon />,
-    name: "Pemasukan",
-    path: "/calendar",
-  },
-  {
     icon: <DocsIcon />,
     name: "Designer",
     path: "/profile",
+  },
+  {
+    name: "Pemasukan",
+    icon: <DollarLineIcon />,
+    subItems: [
+      { name: "Gaji", path: "/basic-tables", pro: false },
+      { name: "Modal", path: "/form-elements", pro: false }
+    ],
   },
   {
     name: "Moderate",
