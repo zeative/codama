@@ -27,27 +27,28 @@ const navItems: NavItem[] = [
   {
     icon: <CheckCircleIcon />,
     name: "Pesanan",
-    path: "/calendar",
+    path: "/orders",
   },
   {
     icon: <DocsIcon />,
     name: "Designer",
-    path: "/profile",
+    path: "/designers",
   },
   {
     name: "Pemasukan",
     icon: <DollarLineIcon />,
     subItems: [
-      { name: "Gaji", path: "/basic-tables", pro: false },
-      { name: "Modal", path: "/form-elements", pro: false }
+      { name: "Gaji", path: "/income/salary", pro: false },
+      { name: "Modal", path: "/income/capital", pro: false }
+
     ],
   },
   {
     name: "Moderate",
     icon: <ShootingStarIcon />,
     subItems: [
-      { name: "Users", path: "/form-elements", pro: false },
-      { name: "Access", path: "/form-elements", pro: false }
+      { name: "Users", path: "/moderate/users", pro: false },
+      { name: "Access", path: "/moderate/access", pro: false }
     ],
   },
   // {
@@ -74,7 +75,7 @@ const othersItems: NavItem[] = [
  {
     icon: <InfoIcon />,
     name: "Support",
-    path: "/profile",
+    path: "/support",
   },
   // {
   //   icon: <BoxCubeIcon />,

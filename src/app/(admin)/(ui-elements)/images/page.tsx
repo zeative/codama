@@ -5,12 +5,12 @@ import ThreeColumnImageGrid from "@/components/ui/images/ThreeColumnImageGrid";
 import TwoColumnImageGrid from "@/components/ui/images/TwoColumnImageGrid";
 import { Metadata } from "next";
 import React from "react";
+import { SITE_METADATA } from "@/consts";
 
 export const metadata: Metadata = {
-  title: "Next.js Images | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Images page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-  // other metadata
+  ...SITE_METADATA,
+  title: SITE_METADATA.titleTemplate("Images"),
+  description: "Images UI elements for Codama web solution.",
 };
 
 export default function Images() {

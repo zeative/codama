@@ -1,9 +1,10 @@
 import SignInForm from "@/components/auth/SignInForm";
+import { SITE_METADATA } from "@/consts";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Signin Page TailAdmin Dashboard Template",
+  ...SITE_METADATA,
+  metadataBase: new URL("https://codama.jaa.web.id"),
 };
 
 export default function SignIn() {

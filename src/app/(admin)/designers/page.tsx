@@ -5,11 +5,14 @@ import { SITE_METADATA } from "@/consts";
 import { Metadata } from "next";
 import React from "react";
 
-export const metadata: Metadata = {
+export const metadata = {
   ...SITE_METADATA,
+  title: SITE_METADATA.titleTemplate("Orders"),
+  description: "Orders UI elements for Codama web solution.",
+
 };
 
-export default function BasicTables() {
+export default function OrdersPage() {
   return (
     <div>
       <PageBreadcrumb pageTitle="Basic Table" />

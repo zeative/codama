@@ -3,12 +3,12 @@ import Badge from "@/components/ui/badge/Badge";
 import { PlusIcon } from "@/icons";
 import { Metadata } from "next";
 import React from "react";
+import { SITE_METADATA } from "@/consts";
 
 export const metadata: Metadata = {
-  title: "Next.js Badge | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Badge page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-  // other metadata
+  ...SITE_METADATA,
+  title: SITE_METADATA.titleTemplate("Badges"),
+  description: "Badges UI elements for Codama web solution.",
 };
 
 export default function BadgePage() {

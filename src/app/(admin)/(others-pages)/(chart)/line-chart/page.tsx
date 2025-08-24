@@ -1,14 +1,14 @@
 import LineChartOne from "@/components/charts/line/LineChartOne";
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import { Metadata } from "next";
+import { SITE_METADATA } from "@/consts";
 import React from "react";
 
-export const metadata: Metadata = {
-  title: "Next.js Line Chart | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Line Chart page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
+export const metadata = {
+  ...SITE_METADATA,
+  title: SITE_METADATA.titleTemplate("Line Chart"),
 };
+
 export default function LineChart() {
   return (
     <div>

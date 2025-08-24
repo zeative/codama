@@ -4,15 +4,16 @@ import FormInModal from "@/components/example/ModalExample/FormInModal";
 import FullScreenModal from "@/components/example/ModalExample/FullScreenModal";
 import ModalBasedAlerts from "@/components/example/ModalExample/ModalBasedAlerts";
 import VerticallyCenteredModal from "@/components/example/ModalExample/VerticallyCenteredModal";
+import { SITE_METADATA } from "@/consts";
 import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Next.js Modals | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Modals page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-  // other metadata
+  ...SITE_METADATA,
+  title: SITE_METADATA.titleTemplate("Modals"),
+  description: "Modals UI elements for Codama web solution.",
 };
+
 
 export default function Modals() {
   return (

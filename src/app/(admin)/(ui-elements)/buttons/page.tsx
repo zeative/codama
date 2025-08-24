@@ -1,15 +1,17 @@
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import Button from "@/components/ui/button/Button";
+import { SITE_METADATA } from "@/consts";
 import { BoxIcon } from "@/icons";
 import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Next.js Buttons | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Buttons page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
+  ...SITE_METADATA,
+  title: SITE_METADATA.titleTemplate("Buttons"),
+  description: "Buttons UI elements for Codama web solution.",
 };
+
 
 export default function Buttons() {
   return (
