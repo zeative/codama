@@ -1,4 +1,5 @@
 import ThemeTogglerTwo from "@/components/common/ThemeTogglerTwo";
+import Head from "next/head";
 
 import { ThemeProvider } from "@/context/ThemeContext";
 import React from "react";
@@ -9,15 +10,34 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
-      <ThemeProvider>
-        <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col  dark:bg-gray-900 sm:p-0">
-          {children}
-          <div className="fixed bottom-6 right-6 z-50 hidden sm:block">
-            <ThemeTogglerTwo />
+    <>
+      <Head>
+        <title>Codama - Your Best Web Solution</title>
+        <meta name="description" content="Codama provides the best web solutions with high performance and SEO optimized features." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href="https://codama.jaa.web.id/" />
+        <link rel="manifest" href="/seo/site.webmanifest" />
+        <link rel="icon" href="/seo/favicon.ico" />
+        <meta property="og:title" content="Codama - Your Best Web Solution" />
+        <meta property="og:description" content="Codama provides the best web solutions with high performance and SEO optimized features." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://codama.jaa.web.id/" />
+        <meta property="og:image" content="/seo/og-image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Codama - Your Best Web Solution" />
+        <meta name="twitter:description" content="Codama provides the best web solutions with high performance and SEO optimized features." />
+        <meta name="twitter:image" content="/seo/twitter-image.png" />
+      </Head>
+      <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
+        <ThemeProvider>
+          <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col  dark:bg-gray-900 sm:p-0">
+            {children}
+            <div className="fixed bottom-6 right-6 z-50 hidden sm:block">
+              <ThemeTogglerTwo />
+            </div>
           </div>
-        </div>
-      </ThemeProvider>
-    </div>
+        </ThemeProvider>
+      </div>
+    </>
   );
 }
