@@ -18,7 +18,7 @@ export async function GET() {
       status: user.isApproved ? "Active" : "Pending",
     }));
     return NextResponse.json(orders);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
   }
 }

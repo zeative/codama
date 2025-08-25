@@ -17,7 +17,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
       data: { isApproved },
     });
     return NextResponse.json({ success: true, user });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to update user approval" }, { status: 500 });
   }
 }

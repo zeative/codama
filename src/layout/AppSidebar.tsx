@@ -9,7 +9,7 @@ import {
   BoltIcon,
   CheckCircleIcon, ChevronDownIcon,
   DollarLineIcon, GridIcon, HorizontaLDots,
-  InfoIcon, ShootingStarIcon, TaskIcon, UserCircleIcon
+  InfoIcon, ShootingStarIcon, TaskIcon
 } from "../icons/index";
 import { roleAccess } from "../config/roleAccess";
 

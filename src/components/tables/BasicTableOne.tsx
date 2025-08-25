@@ -8,12 +8,12 @@ import {
   TableRow,
 } from "../ui/table";
 
-interface BasicTableOneProps {
-  headers: any[];
-  tableData: any[][];
+interface BasicTableOneProps<T = unknown> {
+  headers: string[];
+  tableData: T[][];
 }
 
-export default function BasicTableOne({ headers, tableData }: BasicTableOneProps) {
+export default function BasicTableOne<T = unknown>({ headers, tableData }: BasicTableOneProps<T>) {
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">

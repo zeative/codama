@@ -1,7 +1,5 @@
 import GridShape from "@/components/common/GridShape";
 import { SITE_METADATA } from "@/consts";
-import Image from "next/image";
-import Link from "next/link";
 
 export const metadata = {
   ...SITE_METADATA,

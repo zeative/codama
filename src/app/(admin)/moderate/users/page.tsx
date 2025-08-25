@@ -10,7 +10,17 @@ const roleOptions = ["KING","ADMIN", "USER"];
 
 
 export default function UsersPage() {
-  const [tableData, setTableData] = useState([]);
+  interface UserTableItem {
+    id: string;
+    user: {
+      name?: string;
+      email?: string;
+      role?: string;
+    };
+    isApproved: boolean;
+    status: string;
+  }
+  const [tableData, setTableData] = useState<UserTableItem[]>([]);
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const headers = ["Nama", "Email", "Role", "Status", "Aksi"];
   const { data: session } = useSession();
@@ -36,7 +46,7 @@ export default function UsersPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isApproved: approved })
       });
-    } catch (e) {
+    } catch {
       // Rollback on error
       setTableData(prev => prev.map(item => item.id === userId ? { ...item, isApproved: !approved, status: !approved ? "Active" : "Pending" } : item));
     } finally {
@@ -54,7 +64,7 @@ export default function UsersPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role: newRole })
       });
-    } catch (e) {
+    } catch {
       // Rollback on error
       setTableData(prev => prev.map(item => item.id === userId ? { ...item, user: { ...item.user, role: item.user.role } } : item));
     } finally {
@@ -68,10 +78,9 @@ export default function UsersPage() {
       <div className="space-y-6">
         <BasicTableOne
           headers={headers}
-          tableData={tableData.map((item: any) => [
+          tableData={tableData.map((item: UserTableItem) => [
             item.user?.name || "",
             item.user?.email || "",
-
             (session?.user?.email === item.user?.email ? item.user?.role : <select
               key={item.id + "-role"}
               value={item.user?.role || ""}
@@ -83,7 +92,6 @@ export default function UsersPage() {
                 <option key={role} value={role}>{role}</option>
               ))}
             </select>),
-
             item.status || "",
             <div key={item.id} hidden={session?.user?.email === item.user?.email}>
               <Switch
