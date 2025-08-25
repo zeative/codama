@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { useSession } from 'next-auth/react';
 import { Session } from "next-auth";
 import Loading from "@/app/loading";
-import NotApproved from "@/app/not-approved/page";
 
 type SidebarContextType = {
   isExpanded: boolean;
