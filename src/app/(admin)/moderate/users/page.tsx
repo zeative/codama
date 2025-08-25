@@ -1,25 +1,38 @@
-import ComponentCard from "@/components/common/ComponentCard";
+'use client'
+
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import BasicTableOne from "@/components/tables/BasicTableOne";
 import { SITE_METADATA } from "@/consts";
-import { Metadata } from "next";
-import React from "react";
+import { useEffect, useState } from "react";
 
-export const metadata = {
-  ...SITE_METADATA,
-  title: SITE_METADATA.titleTemplate("Orders"),
-  description: "Orders UI elements for Codama web solution.",
 
-};
+export default function UsersPage() {
+  const [tableData, setTableData] = useState([]);
+  const headers = ["User", "Project Name", "Team", "Status", "Budget"];
 
-export default function OrdersPage() {
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("/api/users");
+      if (res.ok) {
+        const data = await res.json();
+        // Transform data to match headers
+        const transformed = data.map((item) => ({
+          User: item.user,
+          "Project Name": item.projectName || "-",
+          Team: item.team,
+          Status: item.status,
+          Budget: item.budget || "-"
+        }));
+        setTableData(transformed);
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <div>
-      <PageBreadcrumb pageTitle="Basic Table" />
+      <PageBreadcrumb pageTitle="Users" />
       <div className="space-y-6">
-        <ComponentCard title="Basic Table 1">
-          <BasicTableOne />
-        </ComponentCard>
+          <BasicTableOne headers={headers} tableData={tableData} />
       </div>
     </div>
   );

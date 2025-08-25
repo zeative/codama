@@ -1,7 +1,12 @@
 import GridShape from "@/components/common/GridShape";
+import { SITE_METADATA } from "@/consts";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+
+export const metadata = {
+  ...SITE_METADATA,
+  title: "404 - Page Not Found",
+};
 
 export default function NotFound() {
   return (
