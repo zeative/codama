@@ -1,3 +1,4 @@
+"use client";
 import GridShape from "@/components/common/GridShape";
 import { signOut } from "next-auth/react";
 
