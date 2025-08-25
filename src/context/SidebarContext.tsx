@@ -72,7 +72,8 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   if (status == 'loading') return <Loading />
-  if (status == 'authenticated' && (!(session.isApproved ?? session.user?.isApproved))) return <NotApproved />
+  if (status == 'authenticated' && !session.isApproved) return <NotApproved />
+
 
   else return (
     <SidebarContext.Provider
