@@ -72,10 +72,7 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   if (status == 'loading') return <Loading />
-  if (status == 'authenticated' && !session.isApproved) return <NotApproved />
-
-
-  else return (
+  return (
     <SidebarContext.Provider
       value={{
         isExpanded: isMobile ? false : isExpanded,
