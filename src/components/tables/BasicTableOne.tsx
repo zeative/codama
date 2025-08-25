@@ -8,12 +8,12 @@ import {
   TableRow,
 } from "../ui/table";
 
-interface BasicTableOneProps<T = unknown> {
+interface BasicTableOneProps<T extends React.ReactNode = React.ReactNode> {
   headers?: string[];
   tableData?: T[][];
 }
 
-export default function BasicTableOne<T = unknown>({ headers, tableData }: BasicTableOneProps<T>) {
+export default function BasicTableOne<T extends React.ReactNode = React.ReactNode>({ headers, tableData }: BasicTableOneProps<T>) {
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
