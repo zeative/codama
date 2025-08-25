@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { ROLE } from "@prisma/client";
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, { params }) {
   const { role } = await request.json();
   const userId = Number(params.id);
   if (!userId || !role || !Object.values(ROLE).includes(role)) {
