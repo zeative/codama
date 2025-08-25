@@ -13,10 +13,9 @@ export async function GET() {
         image: user.image,
         name: user.name,
         role: user.role,
+        email: user.email,
       },
       status: user.isApproved ? "Active" : "Pending",
-      email: user.email,
-      team: {images: []},
     }));
     return NextResponse.json(orders);
   } catch (error) {

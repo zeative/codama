@@ -40,8 +40,8 @@ const navItems: NavItem[] = [
     name: "Income",
     icon: <DollarLineIcon />,
     subItems: [
-      { name: "Gaji", path: "/income/salary", pro: false },
-      { name: "Modal", path: "/income/capital", pro: false }
+      { name: "Salary", path: "/income/salary", pro: false },
+      { name: "Capital", path: "/income/capital", pro: false }
 
     ],
   },
@@ -50,7 +50,6 @@ const navItems: NavItem[] = [
     icon: <ShootingStarIcon />,
     subItems: [
       { name: "Users", path: "/moderate/users", pro: false },
-      { name: "Access", path: "/moderate/access", pro: false }
     ],
   },
   {

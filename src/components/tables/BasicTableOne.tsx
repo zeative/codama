@@ -8,25 +8,9 @@ import {
   TableRow,
 } from "../ui/table";
 
-
-interface Order {
-  id: number;
-  user: {
-    image: string;
-    name: string;
-    role: string;
-  };
-  projectName: string;
-  team: {
-    images: string[];
-  };
-  status: string;
-  budget: string;
-}
-
 interface BasicTableOneProps {
-  headers: string[];
-  tableData: Record<string, any>[];
+  headers: any[];
+  tableData: any[][];
 }
 
 export default function BasicTableOne({ headers, tableData }: BasicTableOneProps) {
@@ -54,9 +38,9 @@ export default function BasicTableOne({ headers, tableData }: BasicTableOneProps
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
               {tableData.map((row, rowIdx) => (
                 <TableRow key={rowIdx}>
-                  {headers.map((header, colIdx) => (
-                    <TableCell key={colIdx} className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                      {typeof row[header] === "object" && row[header] !== null ? JSON.stringify(row[header]) : row[header]}
+                  {row.map((cell, cellIdx) => (
+                    <TableCell key={cellIdx} className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                      {cell}
                     </TableCell>
                   ))}
                 </TableRow>
