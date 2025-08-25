@@ -9,8 +9,8 @@ import {
 } from "../ui/table";
 
 interface BasicTableOneProps<T = unknown> {
-  headers: string[];
-  tableData: T[][];
+  headers?: string[];
+  tableData?: T[][];
 }
 
 export default function BasicTableOne<T = unknown>({ headers, tableData }: BasicTableOneProps<T>) {
@@ -22,7 +22,7 @@ export default function BasicTableOne<T = unknown>({ headers, tableData }: Basic
             {/* Table Header */}
             <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
               <TableRow>
-                {headers.map((header, idx) => (
+                {headers?.map((header, idx) => (
                   <TableCell
                     key={idx}
                     isHeader
@@ -36,7 +36,7 @@ export default function BasicTableOne<T = unknown>({ headers, tableData }: Basic
 
             {/* Table Body */}
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-              {tableData.map((row, rowIdx) => (
+              {tableData?.map((row, rowIdx) => (
                 <TableRow key={rowIdx}>
                   {row.map((cell, cellIdx) => (
                     <TableCell key={cellIdx} className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
