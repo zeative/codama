@@ -7,7 +7,6 @@ import React from "react";
 export const metadata = {
   ...SITE_METADATA,
   title: SITE_METADATA.titleTemplate("Orders"),
-  description: "Orders UI elements for Codama web solution.",
 
 };
 
