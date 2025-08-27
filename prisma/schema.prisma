@@ -2,6 +2,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Order {
+  id               Int      @id @default(autoincrement())
+  namaPembeli      String
+  tipePesanan      String
+  statusPesanan    String
+  hargaProduk      Int
+  jumlahProduk     Int
+  warnaProduk      String
+  ketebalanAkrilik String
+  keterangan       String?
+  waktuPemesanan   DateTime
+  terakhirUpdate   DateTime @updatedAt
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

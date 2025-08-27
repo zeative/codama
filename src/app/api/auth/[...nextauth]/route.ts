@@ -64,7 +64,7 @@ const handler = NextAuth({
       return session;
     },
     redirect({ baseUrl }) {
-      return baseUrl;
+      return baseUrl + '/dashboard';
     },
   },
 });

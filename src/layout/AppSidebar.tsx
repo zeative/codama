@@ -24,24 +24,24 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    path: "/",
+    path: "/dashboard",
   },
   {
     icon: <CheckCircleIcon />,
     name: "Orders",
-    path: "/orders",
+    path: "/dashboard/orders",
   },
   {
     icon: <TaskIcon />,
     name: "Designers",
-    path: "/designers",
+    path: "/dashboard/designers",
   },
   {
     name: "Income",
     icon: <DollarLineIcon />,
     subItems: [
-      { name: "Salary", path: "/income/salary", pro: false },
-      { name: "Capital", path: "/income/capital", pro: false }
+      { name: "Salary", path: "/dashboard/income/salary", pro: false },
+      { name: "Capital", path: "/dashboard/income/capital", pro: false }
 
     ],
   },
@@ -49,15 +49,16 @@ const navItems: NavItem[] = [
     name: "Moderate",
     icon: <ShootingStarIcon />,
     subItems: [
-      { name: "Users", path: "/moderate/users", pro: false },
+      { name: "Users", path: "/dashboard/moderate/users", pro: false },
+
     ],
   },
   {
     name: "Ekstrakulikuler",
     icon: <BoltIcon />,
     subItems: [
-      { name: "Member", path: "/ekstra/members", pro: false },
-      { name: "Absent", path: "/ekstra/absents", pro: false }
+      { name: "Member", path: "/dashboard/ekstra/members", pro: false },
+      { name: "Absent", path: "/dashboard/ekstra/absents", pro: false }
     ],
   },
   // {
@@ -79,7 +80,7 @@ const othersItems: NavItem[] = [
   {
     icon: <InfoIcon />,
     name: "Support",
-    path: "/support",
+    path: "/dashboard/support",
   },
   // {
   //   icon: <BoxCubeIcon />,
