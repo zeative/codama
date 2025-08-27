@@ -21,8 +21,21 @@ const headers = [
   "Terakhir Update"
 ];
 
+type Order = {
+  namaPembeli: string;
+  tipePesanan: string;
+  statusPesanan: string;
+  hargaProduk: number;
+  jumlahProduk: number;
+  warnaProduk: string;
+  ketebalanAkrilik: string;
+  keterangan: string;
+  waktuPemesanan: Date | string;
+  terakhirUpdate: Date | string;
+};
+
 export default function OrdersPage() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const { isOpen, openModal, closeModal } = useModal();
   const [form, setForm] = useState({
     namaPembeli: "",
@@ -60,7 +73,7 @@ export default function OrdersPage() {
       terakhirUpdate: new Date()
     };
     setOrders([...orders, optimisticOrder]);
-    setShowForm(false);
+    closeModal();
     setForm({
       namaPembeli: "",
       tipePesanan: "",
@@ -103,7 +116,7 @@ export default function OrdersPage() {
     setLoading(false);
   };
 
-  const tableData = orders.map(order => [
+  const tableData = orders?.map(order => [
     order.namaPembeli,
     order.tipePesanan,
     order.statusPesanan,
@@ -122,24 +135,28 @@ export default function OrdersPage() {
       <div className="space-y-6">
         <ComponentCard title="Data Pemesanan Akrilik">
           <Button onClick={openModal} className="mb-4">Tambah Data</Button>
-          <Modal isOpen={isOpen} onClose={closeModal} className="max-w-md p-0">
-            <form onSubmit={handleAddOrder} className="w-full bg-white p-8 rounded-lg shadow-lg space-y-4 relative">
-              <h2 className="text-xl font-semibold mb-4 text-center">Tambah Data Pemesanan</h2>
-              <input name="namaPembeli" placeholder="Nama Pembeli" value={form.namaPembeli} onChange={handleChange} className="input w-full" required />
-              <input name="tipePesanan" placeholder="Tipe Pesanan" value={form.tipePesanan} onChange={handleChange} className="input w-full" required />
-              <input name="statusPesanan" placeholder="Status Pesanan" value={form.statusPesanan} onChange={handleChange} className="input w-full" required />
-              <input name="hargaProduk" placeholder="Harga Produk" value={form.hargaProduk} onChange={handleChange} className="input w-full" type="number" required />
-              <input name="jumlahProduk" placeholder="Jumlah Produk" value={form.jumlahProduk} onChange={handleChange} className="input w-full" type="number" required />
-              <input name="warnaProduk" placeholder="Warna Produk" value={form.warnaProduk} onChange={handleChange} className="input w-full" required />
-              <input name="ketebalanAkrilik" placeholder="Ketebalan Akrilik" value={form.ketebalanAkrilik} onChange={handleChange} className="input w-full" required />
-              <input name="keterangan" placeholder="Keterangan" value={form.keterangan} onChange={handleChange} className="input w-full" />
-              <input name="waktuPemesanan" placeholder="Waktu Pemesanan" value={form.waktuPemesanan} onChange={handleChange} className="input w-full" type="datetime-local" required />
-              <div className="flex gap-2 mt-4">
-                <Button type="submit" disabled={loading} className="w-full">{loading ? "Menyimpan..." : "Simpan"}</Button>
-                <Button type="button" onClick={closeModal} variant="secondary" className="w-full">Batal</Button>
-              </div>
-              {loading && <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-60"><span className="text-lg font-medium">Menyimpan...</span></div>}
-            </form>
+          <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px] p-5 lg:p-10">
+            <div className="w-full rounded-lg bg-white dark:bg-gray-900">
+              <form onSubmit={handleAddOrder} className="space-y-5">
+                <h2 className="text-2xl font-semibold mb-2 text-center text-gray-800 dark:text-white/90">Tambah Data Pemesanan</h2>
+                <div className="grid grid-cols-1 gap-4">
+                  <input name="namaPembeli" placeholder="Nama Pembeli" value={form.namaPembeli} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
+                  <input name="tipePesanan" placeholder="Tipe Pesanan" value={form.tipePesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
+                  <input name="statusPesanan" placeholder="Status Pesanan" value={form.statusPesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
+                  <input name="hargaProduk" placeholder="Harga Produk" value={form.hargaProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
+                  <input name="jumlahProduk" placeholder="Jumlah Produk" value={form.jumlahProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
+                  <input name="warnaProduk" placeholder="Warna Produk" value={form.warnaProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
+                  <input name="ketebalanAkrilik" placeholder="Ketebalan Akrilik" value={form.ketebalanAkrilik} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
+                  <input name="keterangan" placeholder="Keterangan" value={form.keterangan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
+                  <input name="waktuPemesanan" placeholder="Waktu Pemesanan" value={form.waktuPemesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="datetime-local" required />
+                </div>
+                <div className="flex items-center justify-end gap-3 mt-6">
+                  <Button onClick={closeModal} variant="outline" className="w-32" disabled={loading}>Batal</Button>
+                  <Button className="w-32" disabled={loading}>{loading ? "Menyimpan..." : "Simpan"}</Button>
+                </div>
+                {loading && <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-900 bg-opacity-60"><span className="text-lg font-medium text-gray-900 dark:text-white">Menyimpan...</span></div>}
+              </form>
+            </div>
           </Modal>
           <BasicTableOne headers={headers} tableData={tableData} />
         </ComponentCard>
