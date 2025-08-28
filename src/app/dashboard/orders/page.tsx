@@ -22,6 +22,21 @@ const headers = [
   "Terakhir Update"
 ];
 
+const tipePesananOptions: string[] = [
+  "Ganci Akrilik (Letter)",
+  "Ganci Akrilik (Letter TImbul)",
+  "Ganci Akrilik (Letter Transparent)",
+  "Ganci Akrilik (Cover Foto)",
+  "Ganci Spotify Akrilik",
+  "Nomor Rumah Akrilik",
+  "Ganci 3D",
+  "Benda Lainnya (Akrilik)",
+  "Benda Lainnya (3D)"
+];
+
+const statusOptions: StatusPesanan[] = ["PENDING", "PROGRESS", "FINISH", "DONE"];
+
+
 type StatusPesanan = "PENDING" | "PROGRESS" | "FINISH" | "DONE";
 type Order = {
   id?: string;
@@ -143,6 +158,23 @@ export default function OrdersPage() {
       .then(data => setOrders(data));
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      const now = new Date();
+      const jakartaOffset = 7 * 60;
+      const localOffset = now.getTimezoneOffset();
+      const jakartaTime = new Date(now.getTime() + (jakartaOffset + localOffset) * 60000);
+      const pad = (n) => n.toString().padStart(2, "0");
+      const year = jakartaTime.getFullYear();
+      const month = pad(jakartaTime.getMonth() + 1);
+      const day = pad(jakartaTime.getDate());
+      const hours = pad(jakartaTime.getHours());
+      const minutes = pad(jakartaTime.getMinutes());
+      const formatted = `${year}-${month}-${day}T${hours}:${minutes}`;
+      setForm(f => ({ ...f, waktuPemesanan: formatted }));
+    }
+  }, [isOpen]);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -179,7 +211,7 @@ export default function OrdersPage() {
         ...form,
         hargaProduk: Number(form.hargaProduk),
         jumlahProduk: Number(form.jumlahProduk),
-        waktuPemesanan: form.waktuPemesanan,
+        waktuPemesanan: form.waktuPemesanan ? new Date(form.waktuPemesanan).toISOString() : "",
         statusPesanan: form.statusPesanan as StatusPesanan
       };
       const res = await fetch("/api/orders", {
@@ -244,8 +276,8 @@ export default function OrdersPage() {
                     <option value="">Pilih Tipe Pesanan</option>
                     {tipePesananOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
-                  <select name="statusPesanan" defaultValue={statusOptions[0]} value={form.statusPesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
-
+                  <select name="statusPesanan" value={form.statusPesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                    <option value="">Pilih Status Pesanan</option>
                     {statusOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                   <input name="hargaProduk" placeholder="Harga Produk" value={form.hargaProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
@@ -304,8 +336,8 @@ export default function OrdersPage() {
                     <option value="">Pilih Tipe Pesanan</option>
                     {tipePesananOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
-                  <select name="statusPesanan" defaultValue={statusOptions[0]} value={editForm?.statusPesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
-
+                  <select name="statusPesanan" value={editForm?.statusPesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                    <option value="">Pilih Status Pesanan</option>
                     {statusOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                   <input name="hargaProduk" placeholder="Harga Produk" value={editForm?.hargaProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
@@ -328,16 +360,3 @@ export default function OrdersPage() {
     </div>
   );
 }
-
-const tipePesananOptions: string[] = [
-  "Ganci Akrilik (Letter)",
-  "Ganci Akrilik (Letter TImbul)",
-  "Ganci Akrilik (Letter Transparent)",
-  "Ganci Akrilik (Cover Foto)",
-  "Nomor Rumah Akrilik",
-  "Ganci 3D",
-  "Benda Lainnya (Akrilik)",
-  "Benda Lainnya (3D)"
-];
-
-const statusOptions: StatusPesanan[] = ["PENDING", "PROGRESS", "FINISH", "DONE"];

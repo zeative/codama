@@ -19,14 +19,23 @@ export async function POST(req: Request) {
     if (!STATUS_ENUM.includes(data.statusPesanan)) {
       return NextResponse.json({ error: "Invalid statusPesanan value" }, { status: 400 });
     }
+    // Validate waktuPemesanan
+    let waktuPemesananDate: Date | null = null;
+    if (typeof data.waktuPemesanan === "string" && !isNaN(Date.parse(data.waktuPemesanan))) {
+      waktuPemesananDate = new Date(data.waktuPemesanan);
+    } else {
+      return NextResponse.json({ error: "Invalid waktuPemesanan value. Expected ISO-8601 DateTime." }, { status: 400 });
+    }
     const order = await prisma.order.create({
       data: {
         ...data,
+        waktuPemesanan: waktuPemesananDate,
         terakhirUpdate: new Date()
       }
     });
     return NextResponse.json(order);
-  } catch {
+ } catch (E) {
+    console.log(E);
     return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
   }
 }
@@ -37,10 +46,18 @@ export async function PATCH(req: Request) {
     if (!STATUS_ENUM.includes(data.statusPesanan)) {
       return NextResponse.json({ error: "Invalid statusPesanan value" }, { status: 400 });
     }
+    // Validate waktuPemesanan
+    let waktuPemesananDate: Date | null = null;
+    if (typeof data.waktuPemesanan === "string" && !isNaN(Date.parse(data.waktuPemesanan))) {
+      waktuPemesananDate = new Date(data.waktuPemesanan);
+    } else {
+      return NextResponse.json({ error: "Invalid waktuPemesanan value. Expected ISO-8601 DateTime." }, { status: 400 });
+    }
     const order = await prisma.order.update({
       where: { id: data.id },
       data: {
         ...data,
+        waktuPemesanan: waktuPemesananDate,
         terakhirUpdate: new Date()
       }
     });
