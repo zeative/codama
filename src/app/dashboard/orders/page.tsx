@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { useModal } from "@/hooks/useModal";
 import ComponentCard from "@/components/common/ComponentCard";
@@ -69,8 +69,8 @@ export default function OrdersPage() {
       warnaProduk: order.warnaProduk ?? "",
       ketebalanAkrilik: order.ketebalanAkrilik ?? "",
       keterangan: order.keterangan ?? "",
-      waktuPemesanan: order.waktuPemesanan ? new Date(order.waktuPemesanan).toISOString().slice(0, 16) : "",
-      terakhirUpdate: order.terakhirUpdate ?? "",
+      waktuPemesanan: order.waktuPemesanan ? (typeof order.waktuPemesanan === "string" ? order.waktuPemesanan : new Date(order.waktuPemesanan).toISOString().slice(0, 16)) : "",
+      terakhirUpdate: order.terakhirUpdate ? (typeof order.terakhirUpdate === "string" ? order.terakhirUpdate : new Date(order.terakhirUpdate).toISOString()) : "",
       index
     });
     setEditModalOpen(true);
@@ -91,19 +91,20 @@ export default function OrdersPage() {
       return;
     }
     setEditLoading(true);
-    const optimisticOrders = [...orders];
-    const idx = editForm.index;
-    // Preserve the id in optimistic update
     const updatedOrder = {
       ...editForm,
       hargaProduk: Number(editForm.hargaProduk),
       jumlahProduk: Number(editForm.jumlahProduk),
-      waktuPemesanan: new Date(editForm.waktuPemesanan),
-      terakhirUpdate: new Date(),
-      id: editForm.id // Ensure id is present
+      waktuPemesanan: editForm.waktuPemesanan,
+      terakhirUpdate: new Date().toISOString(),
+      id: editForm.id
     };
-    optimisticOrders[idx] = updatedOrder;
-    setOrders(optimisticOrders);
+    const optimisticOrders = [...orders];
+    const idx = editForm.index;
+    if (typeof idx === "number") {
+      optimisticOrders[idx] = updatedOrder;
+      setOrders(optimisticOrders);
+    }
     closeEditModal();
     try {
       const { ...updateOrderPayload } = updatedOrder;
@@ -120,7 +121,9 @@ export default function OrdersPage() {
         const newOrder = await res.json();
         setOrders(current => {
           const copy = [...current];
-          copy[idx] = newOrder;
+          if (typeof idx === "number") {
+            copy[idx] = newOrder;
+          }
           return copy;
         });
       } else {
@@ -150,8 +153,8 @@ export default function OrdersPage() {
       ...form,
       hargaProduk: Number(form.hargaProduk),
       jumlahProduk: Number(form.jumlahProduk),
-      waktuPemesanan: new Date(form.waktuPemesanan),
-      terakhirUpdate: new Date()
+      waktuPemesanan: form.waktuPemesanan,
+      terakhirUpdate: new Date().toISOString()
       // id will be set by backend
     };
     setOrders([...orders, optimisticOrder]);
@@ -173,7 +176,7 @@ export default function OrdersPage() {
         ...form,
         hargaProduk: Number(form.hargaProduk),
         jumlahProduk: Number(form.jumlahProduk),
-        waktuPemesanan: new Date(form.waktuPemesanan)
+        waktuPemesanan: form.waktuPemesanan
       };
       const res = await fetch("/api/orders", {
         method: "POST",
@@ -275,7 +278,7 @@ export default function OrdersPage() {
                 type="button"
                 title="Delete"
                 className="p-2 rounded hover:bg-gray-100 text-red-600"
-                onClick={() => handleDeleteOrder(orders[idx].id)}
+                onClick={() => handleDeleteOrder(orders[idx!].id!, idx)}
               >
                 <Trash2 size={18} />
               </button>
@@ -294,7 +297,7 @@ export default function OrdersPage() {
                   <input name="warnaProduk" placeholder="Warna Produk" value={editForm?.warnaProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <input name="ketebalanAkrilik" placeholder="Ketebalan Akrilik" value={editForm?.ketebalanAkrilik || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <input name="keterangan" placeholder="Keterangan" value={editForm?.keterangan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
-                  <input name="waktuPemesanan" placeholder="Waktu Pemesanan" value={editForm?.waktuPemesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="datetime-local" required />
+                  <input name="waktuPemesanan" placeholder="Waktu Pemesanan" value={editForm?.waktuPemesanan as string || ''} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="datetime-local" required />
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
                   <Button onClick={closeEditModal} variant="outline" className="w-32" disabled={editLoading}>Batal</Button>
