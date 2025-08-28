@@ -24,6 +24,7 @@
     "apexcharts": "^4.3.0",
     "autoprefixer": "^10.4.20",
     "flatpickr": "^4.6.13",
+    "lucide-react": "^0.542.0",
     "next": "15.2.3",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",

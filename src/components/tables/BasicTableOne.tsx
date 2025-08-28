@@ -11,9 +11,10 @@ import {
 interface BasicTableOneProps<T extends React.ReactNode = React.ReactNode> {
   headers?: string[];
   tableData?: T[][];
+  renderRowActions?: (row: T[], idx: number) => React.ReactNode;
 }
 
-export default function BasicTableOne<T extends React.ReactNode = React.ReactNode>({ headers, tableData }: BasicTableOneProps<T>) {
+export default function BasicTableOne<T extends React.ReactNode = React.ReactNode>({ headers, tableData, renderRowActions }: BasicTableOneProps<T>) {
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -31,9 +32,11 @@ export default function BasicTableOne<T extends React.ReactNode = React.ReactNod
                     {header}
                   </TableCell>
                 ))}
+                {renderRowActions && (
+                  <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Actions</TableCell>
+                )}
               </TableRow>
             </TableHeader>
-
             {/* Table Body */}
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
               {tableData?.map((row, rowIdx) => (
@@ -43,6 +46,11 @@ export default function BasicTableOne<T extends React.ReactNode = React.ReactNod
                       {cell}
                     </TableCell>
                   ))}
+                  {renderRowActions && (
+                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                      {renderRowActions(row, rowIdx)}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>

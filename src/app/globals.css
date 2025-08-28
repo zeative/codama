@@ -190,6 +190,10 @@
   body {
     @apply relative font-normal font-outfit z-1 bg-gray-50;
   }
+
+  button {
+    @apply !py-2;
+  }
 }
 
 @utility menu-item {
