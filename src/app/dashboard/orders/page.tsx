@@ -34,6 +34,7 @@ type Order = {
   keterangan: string;
   waktuPemesanan: Date | string;
   terakhirUpdate: Date | string;
+  index?: number;
 };
 
 export default function OrdersPage() {
@@ -55,7 +56,7 @@ export default function OrdersPage() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editForm, setEditForm] = useState<Order | null>(null);
   const [editLoading, setEditLoading] = useState(false);
-  
+
   const openEditModal = (order: Order, index: number) => {
     // Ensure all fields are present and waktuPemesanan is formatted for input
     setEditForm({
@@ -68,7 +69,7 @@ export default function OrdersPage() {
       warnaProduk: order.warnaProduk ?? "",
       ketebalanAkrilik: order.ketebalanAkrilik ?? "",
       keterangan: order.keterangan ?? "",
-      waktuPemesanan: order.waktuPemesanan ? new Date(order.waktuPemesanan).toISOString().slice(0,16) : "",
+      waktuPemesanan: order.waktuPemesanan ? new Date(order.waktuPemesanan).toISOString().slice(0, 16) : "",
       terakhirUpdate: order.terakhirUpdate ?? "",
       index
     });
@@ -105,7 +106,7 @@ export default function OrdersPage() {
     setOrders(optimisticOrders);
     closeEditModal();
     try {
-      const { index, ...updateOrderPayload } = updatedOrder;
+      const { ...updateOrderPayload } = updatedOrder;
       const payload = {
         ...updateOrderPayload,
         id: editForm.id
@@ -262,11 +263,21 @@ export default function OrdersPage() {
             order.terakhirUpdate ? new Date(order.terakhirUpdate).toLocaleString() : ""
           ])} renderRowActions={(_, idx) => (
             <div className="flex gap-2">
-              <button className="p-2 rounded hover:bg-blue-100 dark:hover:bg-blue-900" title="Edit" onClick={() => openEditModal(orders[idx], idx)}>
-                <Pencil size={18} className="text-blue-600" />
+              <button
+                type="button"
+                title="Edit"
+                className="p-2 rounded hover:bg-gray-100"
+                onClick={() => openEditModal(orders[idx], idx)}
+              >
+                <Pencil size={18} />
               </button>
-              <button className="p-2 rounded hover:bg-red-100 dark:hover:bg-red-900" title="Delete" onClick={() => handleDeleteOrder(orders[idx].id, idx)}>
-                <Trash2 size={18} className="text-red-600" />
+              <button
+                type="button"
+                title="Delete"
+                className="p-2 rounded hover:bg-gray-100 text-red-600"
+                onClick={() => handleDeleteOrder(orders[idx].id)}
+              >
+                <Trash2 size={18} />
               </button>
             </div>
           )} />
