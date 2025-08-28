@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+const STATUS_ENUM = ["PENDING", "PROGRESS", "FINISH", "DONE"];
 
 export async function GET() {
   try {
@@ -15,6 +16,9 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
+    if (!STATUS_ENUM.includes(data.statusPesanan)) {
+      return NextResponse.json({ error: "Invalid statusPesanan value" }, { status: 400 });
+    }
     const order = await prisma.order.create({
       data: {
         ...data,
@@ -30,17 +34,18 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     const data = await req.json();
-    const { id, ...updateData } = data;
-    const updatedOrder = await prisma.order.update({
-      where: { id },
+    if (!STATUS_ENUM.includes(data.statusPesanan)) {
+      return NextResponse.json({ error: "Invalid statusPesanan value" }, { status: 400 });
+    }
+    const order = await prisma.order.update({
+      where: { id: data.id },
       data: {
-        ...updateData,
+        ...data,
         terakhirUpdate: new Date()
       }
     });
-    return NextResponse.json(updatedOrder);
-  } catch (E) {
-    console.log(E)
+    return NextResponse.json(order);
+  } catch {
     return NextResponse.json({ error: "Failed to update order" }, { status: 500 });
   }
 }

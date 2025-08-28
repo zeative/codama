@@ -22,11 +22,12 @@ const headers = [
   "Terakhir Update"
 ];
 
+type StatusPesanan = "PENDING" | "PROGRESS" | "FINISH" | "DONE";
 type Order = {
   id?: string;
   namaPembeli: string;
   tipePesanan: string;
-  statusPesanan: string;
+  statusPesanan: StatusPesanan;
   hargaProduk: number;
   jumlahProduk: number;
   warnaProduk: string;
@@ -110,7 +111,8 @@ export default function OrdersPage() {
       const { ...updateOrderPayload } = updatedOrder;
       const payload = {
         ...updateOrderPayload,
-        id: editForm.id
+        id: editForm.id,
+        statusPesanan: editForm.statusPesanan as StatusPesanan
       };
       const res = await fetch("/api/orders", {
         method: "PATCH",
@@ -154,7 +156,8 @@ export default function OrdersPage() {
       hargaProduk: Number(form.hargaProduk),
       jumlahProduk: Number(form.jumlahProduk),
       waktuPemesanan: form.waktuPemesanan,
-      terakhirUpdate: new Date().toISOString()
+      terakhirUpdate: new Date().toISOString(),
+      statusPesanan: form.statusPesanan as StatusPesanan
       // id will be set by backend
     };
     setOrders([...orders, optimisticOrder]);
@@ -176,7 +179,8 @@ export default function OrdersPage() {
         ...form,
         hargaProduk: Number(form.hargaProduk),
         jumlahProduk: Number(form.jumlahProduk),
-        waktuPemesanan: form.waktuPemesanan
+        waktuPemesanan: form.waktuPemesanan,
+        statusPesanan: form.statusPesanan as StatusPesanan
       };
       const res = await fetch("/api/orders", {
         method: "POST",
@@ -237,7 +241,9 @@ export default function OrdersPage() {
                 <div className="grid grid-cols-1 gap-4">
                   <input name="namaPembeli" placeholder="Nama Pembeli" value={form.namaPembeli} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <input name="tipePesanan" placeholder="Tipe Pesanan" value={form.tipePesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <input name="statusPesanan" placeholder="Status Pesanan" value={form.statusPesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
+                  <select name="statusPesanan" value={form.statusPesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                    {statusOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
                   <input name="hargaProduk" placeholder="Harga Produk" value={form.hargaProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="jumlahProduk" placeholder="Jumlah Produk" value={form.jumlahProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="warnaProduk" placeholder="Warna Produk" value={form.warnaProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
@@ -291,7 +297,9 @@ export default function OrdersPage() {
                 <div className="grid grid-cols-1 gap-4">
                   <input name="namaPembeli" placeholder="Nama Pembeli" value={editForm?.namaPembeli || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <input name="tipePesanan" placeholder="Tipe Pesanan" value={editForm?.tipePesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <input name="statusPesanan" placeholder="Status Pesanan" value={editForm?.statusPesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
+                  <select name="statusPesanan" value={editForm?.statusPesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                    {statusOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
                   <input name="hargaProduk" placeholder="Harga Produk" value={editForm?.hargaProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="jumlahProduk" placeholder="Jumlah Produk" value={editForm?.jumlahProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="warnaProduk" placeholder="Warna Produk" value={editForm?.warnaProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
@@ -312,3 +320,5 @@ export default function OrdersPage() {
     </div>
   );
 }
+
+const statusOptions: StatusPesanan[] = ["PENDING", "PROGRESS", "FINISH", "DONE"];

@@ -2,11 +2,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum StatusPesanan {
+  PENDING
+  PROGRESS
+  FINISH
+  DONE
+}
+
 model Order {
   id               Int      @id @default(autoincrement())
   namaPembeli      String
   tipePesanan      String
-  statusPesanan    String
+  statusPesanan    StatusPesanan
   hargaProduk      Int
   jumlahProduk     Int
   warnaProduk      String
