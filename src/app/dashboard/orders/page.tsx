@@ -240,15 +240,19 @@ export default function OrdersPage() {
                 <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white/90">Tambah Data Pemesanan</h2>
                 <div className="grid grid-cols-1 gap-4">
                   <input name="namaPembeli" placeholder="Nama Pembeli" value={form.namaPembeli} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <input name="tipePesanan" placeholder="Tipe Pesanan" value={form.tipePesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <select name="statusPesanan" value={form.statusPesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                  <select name="tipePesanan" value={form.tipePesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                    <option value="">Pilih Tipe Pesanan</option>
+                    {tipePesananOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                  <select name="statusPesanan" defaultValue={statusOptions[0]} value={form.statusPesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+
                     {statusOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                   <input name="hargaProduk" placeholder="Harga Produk" value={form.hargaProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="jumlahProduk" placeholder="Jumlah Produk" value={form.jumlahProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="warnaProduk" placeholder="Warna Produk" value={form.warnaProduk} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <input name="ketebalanAkrilik" placeholder="Ketebalan Akrilik" value={form.ketebalanAkrilik} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <input name="keterangan" placeholder="Keterangan" value={form.keterangan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
+                  <textarea name="keterangan" placeholder="Keterangan" value={form.keterangan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
                   <input name="waktuPemesanan" placeholder="Waktu Pemesanan" value={form.waktuPemesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="datetime-local" required />
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
@@ -296,15 +300,19 @@ export default function OrdersPage() {
                 <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white/90">Edit Data Pemesanan</h2>
                 <div className="grid grid-cols-1 gap-4">
                   <input name="namaPembeli" placeholder="Nama Pembeli" value={editForm?.namaPembeli || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <input name="tipePesanan" placeholder="Tipe Pesanan" value={editForm?.tipePesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <select name="statusPesanan" value={editForm?.statusPesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                  <select name="tipePesanan" value={editForm?.tipePesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+                    <option value="">Pilih Tipe Pesanan</option>
+                    {tipePesananOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                  <select name="statusPesanan" defaultValue={statusOptions[0]} value={editForm?.statusPesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
+
                     {statusOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                   <input name="hargaProduk" placeholder="Harga Produk" value={editForm?.hargaProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="jumlahProduk" placeholder="Jumlah Produk" value={editForm?.jumlahProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="number" required />
                   <input name="warnaProduk" placeholder="Warna Produk" value={editForm?.warnaProduk || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <input name="ketebalanAkrilik" placeholder="Ketebalan Akrilik" value={editForm?.ketebalanAkrilik || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
-                  <input name="keterangan" placeholder="Keterangan" value={editForm?.keterangan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
+                  <textarea name="keterangan" placeholder="Keterangan" value={editForm?.keterangan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
                   <input name="waktuPemesanan" placeholder="Waktu Pemesanan" value={editForm?.waktuPemesanan as string || ''} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" type="datetime-local" required />
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
@@ -320,5 +328,16 @@ export default function OrdersPage() {
     </div>
   );
 }
+
+const tipePesananOptions: string[] = [
+  "Ganci Akrilik (Letter)",
+  "Ganci Akrilik (Letter TImbul)",
+  "Ganci Akrilik (Letter Transparent)",
+  "Ganci Akrilik (Cover Foto)",
+  "Nomor Rumah Akrilik",
+  "Ganci 3D",
+  "Benda Lainnya (Akrilik)",
+  "Benda Lainnya (3D)"
+];
 
 const statusOptions: StatusPesanan[] = ["PENDING", "PROGRESS", "FINISH", "DONE"];
