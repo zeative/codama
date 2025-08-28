@@ -299,10 +299,10 @@ export default function OrdersPage() {
             order.namaPembeli,
             order.tipePesanan,
             order.statusPesanan,
-            order.hargaProduk,
+            `Rp. ${Intl.NumberFormat("id-ID").format(order.hargaProduk)}`,
             order.jumlahProduk,
             order.warnaProduk,
-            order.ketebalanAkrilik,
+            order.ketebalanAkrilik + " mm",
             order.keterangan,
             order.waktuPemesanan ? new Date(order.waktuPemesanan).toLocaleString() : "",
             order.terakhirUpdate ? new Date(order.terakhirUpdate).toLocaleString() : ""
