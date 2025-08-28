@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Table,
   TableBody,
@@ -7,6 +9,7 @@ import {
 } from "../ui/table";
 import Badge from "../ui/badge/Badge";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 // Define the TypeScript interface for the table rows
 interface Product {
@@ -70,6 +73,12 @@ const tableData: Product[] = [
 ];
 
 export default function RecentOrders() {
+  const [orders, setOrders] = useState<Product[]>([]);
+  useEffect(() => {
+    fetch("/api/orders")
+      .then((res) => res.json())
+      .then((data) => setOrders(data));
+  }, []);
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
       <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
@@ -158,7 +167,7 @@ export default function RecentOrders() {
           {/* Table Body */}
 
           <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {tableData.map((product) => (
+            {orders.map((product) => (
               <TableRow key={product.id} className="">
                 <TableCell className="py-3">
                   <div className="flex items-center gap-3">

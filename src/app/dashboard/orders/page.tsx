@@ -266,10 +266,10 @@ export default function OrdersPage() {
       <div className="space-y-6">
         <ComponentCard title="Data Pemesanan Akrilik">
           <Button size="sm" onClick={openModal} className="mb-4">Tambah Data</Button>
-          <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px] p-5 lg:p-8">
+          <Modal showCloseButton={false} isOpen={isOpen} onClose={closeModal} className="max-w-[600px] p-5 lg:p-8">
             <div className="w-full rounded-lg bg-white dark:bg-gray-900">
               <form onSubmit={handleAddOrder} className="space-y-8">
-                <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white/90">Tambah Data Pemesanan</h2>
+                <h2 className="text-xl font-semibold mb-6 text-center text-gray-800 dark:text-white/90">Tambah Data Pemesanan</h2>
                 <div className="grid grid-cols-1 gap-4">
                   <input name="namaPembeli" placeholder="Nama Pembeli" value={form.namaPembeli} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <select name="tipePesanan" value={form.tipePesanan} onChange={handleChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
@@ -326,10 +326,10 @@ export default function OrdersPage() {
               </button>
             </div>
           )} />
-          <Modal isOpen={editModalOpen} onClose={closeEditModal} className="max-w-[600px] p-5 lg:p-10">
+          <Modal showCloseButton={false} isOpen={editModalOpen} onClose={closeEditModal} className="max-w-[600px] p-5 lg:p-10">
             <div className="w-full rounded-lg bg-white dark:bg-gray-900">
               <form onSubmit={handleUpdateOrder} className="space-y-8">
-                <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white/90">Edit Data Pemesanan</h2>
+                <h2 className="text-xl font-semibold mb-6 text-center text-gray-800 dark:text-white/90">Edit Data Pemesanan</h2>
                 <div className="grid grid-cols-1 gap-4">
                   <input name="namaPembeli" placeholder="Nama Pembeli" value={editForm?.namaPembeli || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required />
                   <select name="tipePesanan" value={editForm?.tipePesanan || ""} onChange={handleEditChange} className="input w-full border border-gray-300 dark:border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" required>
