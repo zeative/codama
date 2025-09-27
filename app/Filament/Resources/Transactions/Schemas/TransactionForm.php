@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Transactions\Schemas;
 
 use App\Models\Category;
 use App\Models\Color;
+use Carbon\CarbonImmutable;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -30,7 +31,7 @@ class TransactionForm
                     ->searchable()
                     ->required(),
                 Select::make('status')
-                    ->options(['pending' => 'Pending', 'progress' => 'Progress', 'finish' => 'Finish', 'done' => 'Done'])
+                    ->options(['pending' => 'Pending', 'progress' => 'Progress', 'done' => 'Done', 'cancel' => 'Cancel'])
                     ->default('pending')
                     ->required(),
                 TextInput::make('buyer_name')
@@ -38,20 +39,24 @@ class TransactionForm
                     ->required(),
                 TextInput::make('buyer_phone')
                     ->label('Buyer Phone')
+                    ->prefix('+62')
                     ->tel()
                     ->required()
                     ->numeric(),
                 TextInput::make('product_amount')
                     ->label('Product Price')
+                    ->prefix('Rp')
                     ->required()
                     ->numeric(),
                 TextInput::make('product_count')
                     ->label('Product Total')
+                    ->prefix('x')
                     ->default(1)
                     ->required()
                     ->numeric(),
                 TextInput::make('acrylic_mm')
                     ->label('Acrylic MM')
+                    ->suffix('mm')
                     ->default(5)
                     ->required()
                     ->numeric(),
@@ -59,7 +64,7 @@ class TransactionForm
                     ->required(),
                 DatePicker::make('order_date')
                     ->label('Order Date')
-                    ->default(\Carbon\CarbonImmutable::now())
+                    ->default(CarbonImmutable::now())
                     ->required(),
             ]);
     }

@@ -33,8 +33,8 @@ class TransactionsTable
                     ->options([
                         'pending' => 'Pending',
                         'progress' => 'Progress',
-                        'finish' => 'Finish',
-                        'done' => 'Done'
+                        'done' => 'Done',
+                        'cancel' => 'Cancel'
                     ]),
                 TextColumn::make('buyer_name')
                     ->label("Buyer")

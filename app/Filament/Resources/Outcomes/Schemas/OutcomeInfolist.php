@@ -1,30 +1,29 @@
 <?php
 
-namespace App\Filament\Resources\Salaries\Schemas;
+namespace App\Filament\Resources\Outcomes\Schemas;
 
-use App\Models\Salary;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
-class SalaryInfolist
+class OutcomeInfolist
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextEntry::make('role_id')
+                TextEntry::make('user_id')
                     ->numeric(),
-                TextEntry::make('price')
-                    ->money(),
+                TextEntry::make('name'),
+                TextEntry::make('description'),
+                TextEntry::make('file'),
+                TextEntry::make('date_outcome')
+                    ->date(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
                 TextEntry::make('updated_at')
                     ->dateTime()
                     ->placeholder('-'),
-                TextEntry::make('deleted_at')
-                    ->dateTime()
-                    ->visible(fn (Salary $record): bool => $record->trashed()),
             ]);
     }
 }

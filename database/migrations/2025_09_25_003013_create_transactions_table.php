@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained(table: 'categories')->noActionOnDelete();
             $table->foreignId('color_id');
-            $table->enum('status', ['pending', 'progress', 'finish', 'done'])->default('pending');
+            $table->enum('status', ['pending', 'progress', 'done', 'cancel'])->default('pending');
             $table->string("buyer_name");
             $table->bigInteger("buyer_phone");
             $table->integer("product_amount");

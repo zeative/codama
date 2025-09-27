@@ -10,8 +10,7 @@ use App\Filament\Resources\Salaries\Schemas\SalaryForm;
 use App\Filament\Resources\Salaries\Schemas\SalaryInfolist;
 use App\Filament\Resources\Salaries\Tables\SalariesTable;
 use App\Models\Salary;
-use BackedEnum;
-use UnitEnum;
+use BackedEnum, UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -26,6 +25,7 @@ class SalaryResource extends Resource
     protected static ?string $recordTitleAttribute = 'Salary';
 
     protected static string|UnitEnum|null $navigationGroup = 'Moderation';
+
 
     public static function form(Schema $schema): Schema
     {

@@ -1,24 +1,35 @@
 <?php
 
-namespace App\Filament\Resources\Salaries\Tables;
+namespace App\Filament\Resources\Outcomes\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class SalariesTable
+class OutcomesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('role.name'),
+                TextColumn::make('user.name')
+                    ->searchable(),
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('description')
+                    ->searchable(),
+                TextColumn::make('file')
+                    ->searchable(),
                 TextColumn::make('price')
-                    ->label('Gaji')
-                    ->money(currency: 'IDR', locale: 'id', decimalPlaces: 0)
+                    ->money()
+                    ->sortable(),
+                TextColumn::make('date_outcome')
+                    ->date()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -34,7 +45,7 @@ class SalariesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->recordActions([
                 EditAction::make(),
@@ -42,6 +53,8 @@ class SalariesTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
