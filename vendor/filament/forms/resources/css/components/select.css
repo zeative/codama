@@ -1,0 +1,5 @@
+.fi-fo-select {
+    & .fi-hidden {
+        @apply hidden;
+    }
+}
