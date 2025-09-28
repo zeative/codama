@@ -1,7 +1,0 @@
-.fi-simple-user-menu-ctn {
-    @apply flex items-center gap-x-4;
-}
-
-.fi-user-menu-trigger {
-    @apply shrink-0;
-}
