@@ -10,7 +10,7 @@ use Flowframe\Trend\TrendValue;
 
 class MyAnjay extends ChartWidget
 {
-    protected ?string $heading = 'My Anjay';
+    protected ?string $heading = 'My Transactions';
     protected static ?int $sort = 2;
 
     protected function getData(): array
