@@ -91,7 +91,7 @@ class TransactionsTable
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
-                ]),
+                ])
             ]);
     }
 }
