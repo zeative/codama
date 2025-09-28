@@ -17,6 +17,7 @@ class ColorForm
                 TextInput::make('merk')
                     ->default(null),
                 Toggle::make('is_available')
+                    ->default(true)
                     ->label("Available")
                     ->required(),
             ]);

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Design extends Model
 {
     use HasFactory;
@@ -29,5 +31,10 @@ class Design extends Model
                 $design->user_id = Auth::id();
             }
         });
+    }
+
+    public function transactions(): BelongsToMany
+    {
+        return $this->belongsToMany(Transaction::class);
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Transaction extends Model
 {
     use HasFactory;
@@ -51,5 +53,10 @@ class Transaction extends Model
     public function color(): BelongsTo
     {
         return $this->belongsTo(Color::class);
+    }
+
+    public function designs(): BelongsToMany
+    {
+        return $this->belongsToMany(Design::class);
     }
 }
