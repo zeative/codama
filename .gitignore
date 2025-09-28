@@ -19,6 +19,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+codama-dev.sql
 Homestead.json
 Homestead.yaml
 Thumbs.db
