@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Designs\Schemas;
 
 use App\Models\Design;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -20,7 +21,7 @@ class DesignInfolist
                     ->boolean(),
                 TextEntry::make('notes')
                     ->placeholder('-'),
-                TextEntry::make('file'),
+                ImageEntry::make('file'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

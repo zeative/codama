@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Transactions\Schemas;
 
 use App\Models\Transaction;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -30,6 +31,7 @@ class TransactionInfolist
                 TextEntry::make('acrylic_mm')
                     ->numeric(),
                 TextEntry::make('notes'),
+                ImageEntry::make('attachments'),
                 TextEntry::make('order_date')
                     ->date(),
                 TextEntry::make('created_at')
@@ -40,7 +42,7 @@ class TransactionInfolist
                     ->placeholder('-'),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Transaction $record): bool => $record->trashed()),
+                    ->visible(fn(Transaction $record): bool => $record->trashed()),
             ]);
     }
 }

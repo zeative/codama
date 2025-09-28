@@ -84,7 +84,7 @@ class TransactionsTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                ViewAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

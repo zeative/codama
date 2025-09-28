@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Color;
 use Carbon\CarbonImmutable;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -66,6 +67,9 @@ class TransactionForm
                     ->label('Order Date')
                     ->default(CarbonImmutable::now())
                     ->required(),
+                FileUpload::make('attachments')
+                    ->multiple()
+                    ->maxParallelUploads(5),
             ]);
     }
 }

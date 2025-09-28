@@ -26,6 +26,7 @@ class Transaction extends Model
         "product_count",
         "acrylic_mm",
         "notes",
+        "attachments",
         "order_date",
     ];
 
@@ -58,5 +59,12 @@ class Transaction extends Model
     public function designs(): BelongsToMany
     {
         return $this->belongsToMany(Design::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'attachments' => 'array',
+        ];
     }
 }

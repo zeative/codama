@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->integer("product_count");
             $table->integer("acrylic_mm");
             $table->string("notes");
+            $table->json("attachments");
             $table->date("order_date");
             $table->timestamps();
             $table->softDeletes();
