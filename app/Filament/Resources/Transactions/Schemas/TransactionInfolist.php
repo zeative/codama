@@ -31,7 +31,7 @@ class TransactionInfolist
                     ->openUrlInNewTab(),
                 TextEntry::make('product_amount')
                     ->label("Harga Produk")
-                    ->numeric(),
+                    ->money('IDR', locale: 'id'),
                 TextEntry::make('product_count')
                     ->label("Jumlah Produk")
                     ->prefix('x')
