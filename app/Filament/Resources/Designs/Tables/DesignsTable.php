@@ -20,17 +20,24 @@ class DesignsTable
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make(name: 'user.name')
+                    ->color("info")
+                    ->label("Designer"),
                 TextColumn::make('name')
+                    ->label("Nama File")
                     ->searchable(),
-                ToggleColumn::make('is_finish'),
+                ToggleColumn::make('is_finish')
+                    ->label("Selesai"),
                 TextColumn::make('notes')
+                    ->label("Catatan")
                     ->default('-')
                     ->searchable(),
                 TextColumn::make('file')
-                    ->searchable(),
+                    ->searchable()
+                    ->url(function (string $state, $record): string {
+                        return route('download.file', ['file_path' => $state]);
+                    })
+                    ->openUrlInNewTab(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -48,7 +55,7 @@ class DesignsTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                ViewAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

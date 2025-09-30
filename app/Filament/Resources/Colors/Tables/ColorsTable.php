@@ -21,11 +21,13 @@ class ColorsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable(),
                 TextColumn::make('merk')
+                    ->label('Merek Cat')
                     ->searchable(),
                 ToggleColumn::make('is_available')
-                    ->label('Available'),
+                    ->label('Tersedia'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -43,7 +45,7 @@ class ColorsTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                ViewAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

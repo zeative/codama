@@ -13,8 +13,10 @@ class CategoryInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                ImageEntry::make('image'),
+                TextEntry::make('name')
+                    ->label('Nama Produk'),
+                ImageEntry::make('image')
+                    ->label('Foto Produk'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -23,7 +25,7 @@ class CategoryInfolist
                     ->placeholder('-'),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Category $record): bool => $record->trashed()),
+                    ->visible(fn(Category $record): bool => $record->trashed()),
             ]);
     }
 }

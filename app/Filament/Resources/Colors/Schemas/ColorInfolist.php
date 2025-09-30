@@ -13,11 +13,14 @@ class ColorInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
+                TextEntry::make('name')
+                    ->label('Nama'),
                 TextEntry::make('merk')
+                    ->label('Merek Cat')
                     ->placeholder('-'),
                 IconEntry::make('is_available')
-                    ->boolean(),
+                    ->boolean()
+                    ->label('Tersedia'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -26,7 +29,7 @@ class ColorInfolist
                     ->placeholder('-'),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Color $record): bool => $record->trashed()),
+                    ->visible(fn(Color $record): bool => $record->trashed()),
             ]);
     }
 }

@@ -13,12 +13,14 @@ class ColorForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nama')
                     ->required(),
                 TextInput::make('merk')
+                    ->label('Merek Cat')
                     ->default(null),
                 Toggle::make('is_available')
                     ->default(true)
-                    ->label("Available")
+                    ->label("Tersedia")
                     ->required(),
             ]);
     }

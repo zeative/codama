@@ -13,8 +13,10 @@ class CategoryForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nama Produk')
                     ->required(),
                 FileUpload::make('image')
+                    ->label('Foto Produk')
                     ->image()
                     ->directory('categories')
                     ->required(),
