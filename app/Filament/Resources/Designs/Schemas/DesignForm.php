@@ -25,7 +25,7 @@ class DesignForm
                     ->hidden()
                     ->dehydrated(false),
                 Select::make('transaction_id')
-                    ->label('Pilih transaksi')
+                    ->label('Pilih Transaksi')
                     ->relationship(
                         name: 'transactions',
                         titleAttribute: 'buyer_name',
