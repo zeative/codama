@@ -68,4 +68,9 @@ class ColorResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_available', '=', 1)->count();
+    }
 }

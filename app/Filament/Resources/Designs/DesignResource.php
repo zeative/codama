@@ -68,4 +68,9 @@ class DesignResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_finish', '=', 1)->count();
+    }
 }
