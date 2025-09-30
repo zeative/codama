@@ -13,26 +13,36 @@ class TransactionInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('user_id')
-                    ->numeric(),
-                TextEntry::make('category_id')
-                    ->numeric(),
-                TextEntry::make('color_id')
-                    ->numeric(),
+                TextEntry::make(name: 'user.name')
+                    ->color("info")
+                    ->label("Admin"),
+                TextEntry::make(name: 'category.name')
+                    ->label("Kategori"),
+                TextEntry::make(name: 'color.name')
+                    ->label("Warna"),
                 TextEntry::make('status')
                     ->badge(),
-                TextEntry::make('buyer_name'),
+                TextEntry::make('buyer_name')
+                    ->label("Nama Pembeli"),
                 TextEntry::make('buyer_phone')
+                    ->label("Kontak Pembeli")
                     ->numeric(),
                 TextEntry::make('product_amount')
+                    ->label("Harga Produk")
                     ->numeric(),
                 TextEntry::make('product_count')
+                    ->label("Jumlah Produk")
+                    ->prefix('x')
                     ->numeric(),
                 TextEntry::make('acrylic_mm')
+                    ->label("Akrilik")
+                    ->suffix('mm')
                     ->numeric(),
-                TextEntry::make('notes'),
+                TextEntry::make('notes')
+                    ->label("Catatan"),
                 ImageEntry::make('attachments'),
                 TextEntry::make('order_date')
+                    ->label("Tanggal Pemesanan")
                     ->date(),
                 TextEntry::make('created_at')
                     ->dateTime()

@@ -23,12 +23,12 @@ class TransactionForm
                     ->hidden()
                     ->dehydrated(false),
                 Select::make('category_id')
-                    ->label('Category')
+                    ->label('Pilih Kategori')
                     ->options(Category::query()->pluck('name', 'id'))
                     ->searchable()
                     ->required(),
                 Select::make('color_id')
-                    ->label('Color')
+                    ->label('Pilih Warna')
                     ->options(Color::query()->pluck('name', 'id'))
                     ->searchable()
                     ->required(),
@@ -37,35 +37,36 @@ class TransactionForm
                     ->default('pending')
                     ->required(),
                 TextInput::make('buyer_name')
-                    ->label('Buyer Name')
+                    ->label('Nama Pembeli')
                     ->required(),
                 TextInput::make('buyer_phone')
-                    ->label('Buyer Phone')
+                    ->label('Kontak Pembeli')
                     ->prefix('+62')
                     ->tel()
                     ->required()
                     ->numeric(),
                 TextInput::make('product_amount')
-                    ->label('Product Price')
+                    ->label('Harga Produk')
                     ->prefix('Rp')
                     ->required()
                     ->numeric(),
                 TextInput::make('product_count')
-                    ->label('Product Total')
+                    ->label('Jumlah Produk')
                     ->prefix('x')
                     ->default(1)
                     ->required()
                     ->numeric(),
                 TextInput::make('acrylic_mm')
-                    ->label('Acrylic MM')
+                    ->label('Akrilik')
                     ->suffix('mm')
                     ->default(5)
                     ->required()
                     ->numeric(),
                 Textarea::make('notes')
+                    ->label('Catatan')
                     ->required(),
                 DatePicker::make('order_date')
-                    ->label('Order Date')
+                    ->label('Tanggal Pemesanan')
                     ->default(CarbonImmutable::now())
                     ->required(),
                 FileUpload::make('attachments')
