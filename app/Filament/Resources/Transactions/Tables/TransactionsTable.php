@@ -38,7 +38,7 @@ class TransactionsTable
                     ]),
                 TextColumn::make('buyer_name')
                     ->label("Buyer")
-                    ->description(fn(Transaction $record): string => $record->buyer_phone)
+                    ->description(fn(Transaction $record): string => '62' . $record->buyer_phone)
                     ->searchable(),
                 TextColumn::make('product_amount')
                     ->label("Price")
