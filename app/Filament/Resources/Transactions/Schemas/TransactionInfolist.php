@@ -26,7 +26,9 @@ class TransactionInfolist
                     ->label("Nama Pembeli"),
                 TextEntry::make('buyer_phone')
                     ->label("Kontak Pembeli")
-                    ->numeric(),
+                    ->prefix('62')
+                    ->url(fn(Transaction $record): string => 'https://wa.me/62' . $record->buyer_phone)
+                    ->openUrlInNewTab(),
                 TextEntry::make('product_amount')
                     ->label("Harga Produk")
                     ->numeric(),
