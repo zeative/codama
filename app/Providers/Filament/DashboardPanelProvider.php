@@ -46,6 +46,8 @@ class DashboardPanelProvider extends PanelProvider
             ->darkModeBrandLogo('/codama-dark.svg')
             ->login()
             ->registration()
+            ->profile()
+            ->simpleProfilePage(false)
             ->colors([
                 'primary' => Color::Orange,
             ])
