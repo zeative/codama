@@ -7,6 +7,8 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -17,18 +19,23 @@ class OutcomesTable
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')
+                TextColumn::make(name: 'user.name')
+                    ->color("info")
+                    ->label("Admin")
                     ->searchable(),
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('description')
-                    ->searchable(),
-                TextColumn::make('file')
+                    ->label("Nama Barang")
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->label("Harga Barang")
+                    ->money('IDR', locale: 'id')
                     ->sortable(),
+                ImageColumn::make('file')
+                    ->label("Bukti Foto"),
+                TextColumn::make('description')
+                    ->label("Deskripsi"),
                 TextColumn::make('date_outcome')
+                    ->label("Tanggal Pembelian")
                     ->date()
                     ->sortable(),
                 TextColumn::make('created_at')
@@ -48,7 +55,7 @@ class OutcomesTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                ViewAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

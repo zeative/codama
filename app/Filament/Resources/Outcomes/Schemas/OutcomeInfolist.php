@@ -11,12 +11,17 @@ class OutcomeInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('user_id')
-                    ->numeric(),
-                TextEntry::make('name'),
-                TextEntry::make('description'),
-                TextEntry::make('file'),
+                TextEntry::make(name: 'user.name')
+                    ->label("Admin")
+                    ->color("info"),
+                TextEntry::make('name')
+                    ->label("Nama Barang"),
+                TextEntry::make('description')
+                    ->label("Deskripsi"),
+                TextEntry::make('file')
+                    ->label("Bukti Foto"),
                 TextEntry::make('date_outcome')
+                    ->label("Tanggal Pembelian")
                     ->date(),
                 TextEntry::make('created_at')
                     ->dateTime()

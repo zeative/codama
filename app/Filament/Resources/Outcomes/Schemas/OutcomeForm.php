@@ -20,17 +20,22 @@ class OutcomeForm
                     ->hidden()
                     ->dehydrated(false),
                 TextInput::make('name')
+                    ->label("Nama Barang")
                     ->required(),
                 TextInput::make('description')
+                    ->label("Deskripsi")
                     ->required(),
                 TextInput::make('price')
+                    ->label("Harga Barang")
                     ->required()
                     ->numeric()
                     ->prefix('Rp'),
                 DatePicker::make('date_outcome')
+                    ->label("Tanggal Pembelian")
                     ->default(CarbonImmutable::now())
                     ->required(),
                 FileUpload::make('file')
+                    ->label("Bukti Foto")
                     ->required(),
             ]);
     }

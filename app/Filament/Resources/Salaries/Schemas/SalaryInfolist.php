@@ -12,10 +12,11 @@ class SalaryInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('role_id')
-                    ->numeric(),
+                TextEntry::make('role.name')
+                    ->color('info'),
                 TextEntry::make('price')
-                    ->money(),
+                    ->label('Gaji')
+                    ->money('IDR', locale: 'id'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -24,7 +25,7 @@ class SalaryInfolist
                     ->placeholder('-'),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Salary $record): bool => $record->trashed()),
+                    ->visible(fn(Salary $record): bool => $record->trashed()),
             ]);
     }
 }
