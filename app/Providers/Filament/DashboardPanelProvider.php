@@ -20,9 +20,12 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use UnitEnum;
 
 class DashboardPanelProvider extends PanelProvider
 {
+    protected static string|UnitEnum|null $navigationGroup = 'General';
+
     public function panel(Panel $panel): Panel
     {
         FilamentView::registerRenderHook(
