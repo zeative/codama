@@ -18,7 +18,7 @@ class Design extends Model
     protected $fillable = [
         "user_id",
         "name",
-        "description",
+        "notes",
         "is_finish",
         "file"
     ];
