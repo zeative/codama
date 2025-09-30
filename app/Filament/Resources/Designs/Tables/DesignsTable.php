@@ -33,11 +33,7 @@ class DesignsTable
                     ->default('-')
                     ->searchable(),
                 TextColumn::make('file')
-                    ->searchable()
-                    ->url(function (string $state, $record): string {
-                        return route('download.file', ['file_path' => $state]);
-                    })
-                    ->openUrlInNewTab(),
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

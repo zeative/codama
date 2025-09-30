@@ -7,6 +7,7 @@ use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 
 class DesignInfolist
 {
@@ -14,14 +15,18 @@ class DesignInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('user_id')
-                    ->numeric(),
-                TextEntry::make('name'),
+                TextEntry::make(name: 'user.name')
+                    ->label("Designer")
+                    ->color("info"),
+                TextEntry::make('name')
+                    ->label("Nama File"),
                 IconEntry::make('is_finish')
+                    ->label("Selesai")
                     ->boolean(),
                 TextEntry::make('notes')
+                    ->label("Catatan")
                     ->placeholder('-'),
-                ImageEntry::make('file'),
+                TextEntry::make('file'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -30,7 +35,7 @@ class DesignInfolist
                     ->placeholder('-'),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Design $record): bool => $record->trashed()),
+                    ->visible(fn(Design $record): bool => $record->trashed()),
             ]);
     }
 }

@@ -10,20 +10,21 @@ use App\Filament\Resources\Galleries\Schemas\GalleryForm;
 use App\Filament\Resources\Galleries\Schemas\GalleryInfolist;
 use App\Filament\Resources\Galleries\Tables\GalleriesTable;
 use App\Models\Gallery;
-use BackedEnum, UnitEnum;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GalleryResource extends Resource
 {
     protected static ?string $model = Gallery::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Gallery';
-    protected static string|UnitEnum|null $navigationGroup = 'Team';
 
     public static function form(Schema $schema): Schema
     {
@@ -57,8 +58,11 @@ class GalleryResource extends Resource
         ];
     }
 
-    public static function getNavigationBadge(): ?string
+    public static function getRecordRouteBindingEloquentQuery(): Builder
     {
-        return static::getModel()::count();
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

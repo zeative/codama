@@ -8,6 +8,7 @@ use Carbon\CarbonImmutable;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -61,7 +62,7 @@ class TransactionForm
                     ->default(5)
                     ->required()
                     ->numeric(),
-                TextInput::make('notes')
+                Textarea::make('notes')
                     ->required(),
                 DatePicker::make('order_date')
                     ->label('Order Date')
