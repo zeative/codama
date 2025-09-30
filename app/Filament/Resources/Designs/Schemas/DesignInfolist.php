@@ -26,7 +26,13 @@ class DesignInfolist
                 TextEntry::make('notes')
                     ->label("Catatan")
                     ->placeholder('-'),
-                TextEntry::make('file'),
+                TextEntry::make('file')
+                    ->formatStateUsing(function ($record) {
+                        return basename($record->file);
+                    })
+                    ->url(function ($record) {
+                        return route('design.download', ['id' => $record->id]);
+                    }, shouldOpenInNewTab: false),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
