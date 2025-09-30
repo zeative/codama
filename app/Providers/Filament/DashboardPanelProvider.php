@@ -24,8 +24,6 @@ use UnitEnum;
 
 class DashboardPanelProvider extends PanelProvider
 {
-    protected static string|UnitEnum|null $navigationGroup = 'General';
-
     public function panel(Panel $panel): Panel
     {
         FilamentView::registerRenderHook(

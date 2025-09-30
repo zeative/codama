@@ -23,7 +23,7 @@ class GalleryResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
 
     protected static ?string $recordTitleAttribute = 'Gallery';
-    protected static string|UnitEnum|null $navigationGroup = 'General';
+    protected static string|UnitEnum|null $navigationGroup = 'Team';
 
     public static function form(Schema $schema): Schema
     {
@@ -55,5 +55,10 @@ class GalleryResource extends Resource
             'view' => ViewGallery::route('/{record}'),
             'edit' => EditGallery::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }
