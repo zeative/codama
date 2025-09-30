@@ -13,7 +13,7 @@ class DesignController extends Controller
     {
         $design = Design::findOrFail($id);
 
-        if (Auth::id() !== $design->user_id && !Auth::user()->hasRole('admin')) {
+        if (!Auth::check()) {
             abort(403, 'Unauthorized to download this file.');
         }
 
