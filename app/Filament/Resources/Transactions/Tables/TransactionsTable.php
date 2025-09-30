@@ -26,7 +26,7 @@ class TransactionsTable
                     ->color("info")
                     ->label("Admin"),
                 TextColumn::make('category.name')
-                    ->label("Type")
+                    ->label("Detail")
                     ->description(fn(Transaction $record): string => $record->color->name)
                     ->searchable(),
                 SelectColumn::make('status')
@@ -37,15 +37,17 @@ class TransactionsTable
                         'cancel' => 'Cancel'
                     ]),
                 TextColumn::make('buyer_name')
-                    ->label("Buyer")
+                    ->label("Pembeli")
                     ->description(fn(Transaction $record): string => '62' . $record->buyer_phone)
+                    ->url(fn(Transaction $record): string => 'https://wa.me/62' . $record->buyer_phone)
+                    ->openUrlInNewTab()
                     ->searchable(),
                 TextColumn::make('product_amount')
-                    ->label("Price")
+                    ->label("Harga")
                     ->money('IDR', locale: 'id')
                     ->description(fn(Transaction $record): string => $record->product_count . "x")
                     ->sortable(),
-                TextColumn::make('Income')
+                TextColumn::make('Pemasukan')
                     ->getStateUsing(function ($record) {
                         $amount = $record->product_amount;
                         $count = $record->product_count;
@@ -56,15 +58,16 @@ class TransactionsTable
                     ->color("warning")
                     ->sortable(),
                 TextColumn::make('acrylic_mm')
-                    ->label("Acrylic MM")
+                    ->label("Akrilik")
                     ->suffix("mm")
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('notes')
+                    ->label("Catatan")
                     ->default('-')
                     ->searchable(),
                 TextColumn::make('order_date')
-                    ->label("Order Date")
+                    ->label("Tanggal Pemesanan")
                     ->date()
                     ->sortable(),
                 TextColumn::make('created_at')
