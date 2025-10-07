@@ -14,56 +14,58 @@ class GeneralMonth extends StatsOverviewWidget
 {
     protected function getStats(): array
     {
-        $startOfWeek = now()->startOfWeek();
-        $endOfWeek = now()->endOfWeek();
+        // Change to monthly data while keeping weekly chart
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
 
         $income_total = Transaction::query()
             ->where('status', '=', 'done')
-            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->sum(DB::raw('product_amount * product_count'));
 
         $outcome_total = Outcome::query()
-            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->sum('price');
 
         $salary_total = $income_total - $outcome_total;
 
-        // Get weekly data for the last 4 weeks for charts
-        $fourWeeksAgo = Carbon::now()->subWeeks(3)->startOfWeek();
-        $currentWeek = Carbon::now()->endOfWeek();
+        // Get weekly data for the current month for charts
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
         
-        // Get income weekly data
+        // Get income weekly data for the current month
         $weeklyIncome = Transaction::select(
                 DB::raw('SUM(product_amount * product_count) as total'),
                 DB::raw('YEARWEEK(created_at, 1) as yearweek')
             )
             ->where('status', '=', 'done')
-            ->whereBetween('created_at', [$fourWeeksAgo, $currentWeek])
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->groupBy(DB::raw('YEARWEEK(created_at, 1)'))
             ->orderBy('yearweek', 'asc')
             ->pluck('total')
             ->toArray();
         
         // Fill missing weeks with 0
-        $incomeChart = $this->fillMissingWeeks($weeklyIncome, 4);
+        $maxWeeksInMonth = 6; // Max possible weeks in a month
+        $incomeChart = $this->fillMissingWeeks($weeklyIncome, $maxWeeksInMonth);
         
-        // Get outcome weekly data
+        // Get outcome weekly data for the current month
         $weeklyOutcome = Outcome::select(
                 DB::raw('SUM(price) as total'),
                 DB::raw('YEARWEEK(created_at, 1) as yearweek')
             )
-            ->whereBetween('created_at', [$fourWeeksAgo, $currentWeek])
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->groupBy(DB::raw('YEARWEEK(created_at, 1)'))
             ->orderBy('yearweek', 'asc')
             ->pluck('total')
             ->toArray();
         
         // Fill missing weeks with 0
-        $outcomeChart = $this->fillMissingWeeks($weeklyOutcome, 4);
+        $outcomeChart = $this->fillMissingWeeks($weeklyOutcome, $maxWeeksInMonth);
         
         // Calculate salary chart (income - outcome per week)
         $salaryChart = [];
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < $maxWeeksInMonth; $i++) {
             $salaryChart[$i] = isset($incomeChart[$i]) && isset($outcomeChart[$i]) 
                 ? $incomeChart[$i] - $outcomeChart[$i] 
                 : (isset($incomeChart[$i]) ? $incomeChart[$i] : 0);
@@ -71,22 +73,22 @@ class GeneralMonth extends StatsOverviewWidget
         
         // Create a simple chart for "Penggajian"
         $penggajianChart = [];
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < $maxWeeksInMonth; $i++) {
             $penggajianChart[$i] = 0; // Based on your current implementation
         }
 
         return [
             Stat::make('Pemasukan', Number::currency($income_total, 'IDR', 'id', 0))
-                ->description('Dalam minggu ini')
+                ->description('Dalam bulan ini')
                 ->chart($incomeChart),
             Stat::make('Pengeluaran', Number::currency($outcome_total, 'IDR', 'id', 0))
-                ->description('Dalam minggu ini')
+                ->description('Dalam bulan ini')
                 ->chart($outcomeChart),
             Stat::make('Penggajian', Number::currency(0, 'IDR', 'id', 0))
-                ->description('Dalam minggu ini')
+                ->description('Dalam bulan ini')
                 ->chart($penggajianChart),
             Stat::make('Pemasukan (kotor)', Number::currency($salary_total, 'IDR', 'id', 0))
-                ->description('Dalam minggu ini')
+                ->description('Dalam bulan ini')
                 ->chart($salaryChart),
         ];
     }
