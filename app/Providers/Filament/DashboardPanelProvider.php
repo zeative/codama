@@ -13,6 +13,7 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Filament\Support\Facades\FilamentView;
+use App\Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -61,6 +62,14 @@ class DashboardPanelProvider extends PanelProvider
             ->widgets([
                 // AccountWidget::class,
                 // FilamentInfoWidget::class,
+                Widgets\General::class,
+                Widgets\GeneralMonth::class,
+                Widgets\MyTransactions::class,
+                Widgets\MyWidget::class,
+                Widgets\StatsAllTimes::class,
+                Widgets\StatsPerMonth::class,
+                Widgets\TransactionAnalysis::class,
+                Widgets\TransactionStatusDistribution::class,
             ])
             ->middleware([
                 EncryptCookies::class,
