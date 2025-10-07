@@ -32,7 +32,17 @@ class TransactionAnalysis extends StatsOverviewWidget
 
         // Total transactions in progress
         $inProgressCount = Transaction::where('user_id', $userId)
-            ->whereIn('status', ['progress', 'pending'])
+            ->where('status', 'progress')
+            ->count();
+
+        // Total pending transactions
+        $pendingCount = Transaction::where('user_id', $userId)
+            ->where('status', 'pending')
+            ->count();
+
+        // Total cancelled transactions
+        $cancelledCount = Transaction::where('user_id', $userId)
+            ->where('status', 'cancel')
             ->count();
 
         // Average transaction value
@@ -66,44 +76,47 @@ class TransactionAnalysis extends StatsOverviewWidget
             $monthlyCounts[] = $monthlyRecord ? (int)$monthlyRecord->transaction_count : 0;
         }
 
-        // Get top 3 categories by transaction value
-        $topCategories = DB::table('transactions')
-            ->join('categories', 'transactions.category_id', '=', 'categories.id')
-            ->select(
-                'categories.name',
-                DB::raw('SUM(transactions.product_amount * transactions.product_count) as total_value'),
-                DB::raw('COUNT(transactions.id) as transaction_count')
-            )
-            ->where('transactions.user_id', $userId)
-            ->groupBy('categories.id', 'categories.name')
-            ->orderBy('total_value', 'desc')
-            ->limit(3)
-            ->get();
-
         // Calculate completion rate
         $allTransactionsCount = Transaction::where('user_id', $userId)->count();
         $completionRate = $allTransactionsCount > 0 
             ? round(($completedCount / $allTransactionsCount) * 100, 2) 
             : 0;
 
+        // Calculate average transaction value
+        $formattedAvgValue = $avgTransactionValue > 0 
+            ? Number::currency($avgTransactionValue, 'IDR', 'id', 0) 
+            : 'Rp 0';
+
         return [
-            Stat::make('Total Transaction Value', Number::currency($totalValue, 'IDR', 'id', 0))
-                ->description('All time')
+            Stat::make('💰 Total Revenue', Number::currency($totalValue, 'IDR', 'id', 0))
+                ->description('All transactions')
                 ->chart($monthlyAmounts)
-                ->color('success'),
+                ->color('success')
+                ->extraAttributes([
+                    'class' => 'cursor-pointer',
+                    'title' => 'Total revenue from all transactions'
+                ]),
 
-            Stat::make('Completed Transactions', $completedCount)
-                ->description('All time')
+            Stat::make('✅ Completed', $completedCount)
+                ->description('Successfully completed')
                 ->chart($monthlyCounts)
-                ->color('info'),
+                ->color('success')
+                ->extraAttributes([
+                    'class' => 'cursor-pointer',
+                    'title' => 'Total number of successfully completed transactions'
+                ]),
 
-            Stat::make('Completion Rate', $completionRate . '%')
-                ->description('Of all transactions')
+            Stat::make('📊 Completion Rate', $completionRate . '%')
+                ->description('Overall completion rate')
                 ->chart([
                     min(100, $completionRate), 
                     100 - min(100, $completionRate)
                 ])
-                ->color($completionRate >= 80 ? 'success' : ($completionRate >= 50 ? 'warning' : 'danger')),
+                ->color($completionRate >= 80 ? 'success' : ($completionRate >= 50 ? 'warning' : 'danger'))
+                ->extraAttributes([
+                    'class' => 'cursor-pointer',
+                    'title' => 'Percentage of completed vs total transactions'
+                ]),
         ];
     }
 }

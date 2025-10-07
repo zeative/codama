@@ -7,13 +7,11 @@ use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Filament\Widgets\ChartWidget;
-use Flowframe\Trend\Trend;
-use Flowframe\Trend\TrendValue;
 use Number;
 
 class MyTransactions extends ChartWidget
 {
-    protected ?string $heading = 'My Transactions';
+    protected ?string $heading = '📊 Transaction Performance Overview';
     protected static ?int $sort = 2;
     protected int | string | array $columnSpan = 'full';
 
@@ -28,7 +26,8 @@ class MyTransactions extends ChartWidget
                 DB::raw('COUNT(CASE WHEN status = "done" THEN 1 END) as completed_count'),
                 DB::raw('COUNT(CASE WHEN status = "progress" THEN 1 END) as progress_count'),
                 DB::raw('COUNT(CASE WHEN status = "pending" THEN 1 END) as pending_count'),
-                DB::raw('COUNT(CASE WHEN status = "cancel" THEN 1 END) as cancelled_count')
+                DB::raw('COUNT(CASE WHEN status = "cancel" THEN 1 END) as cancelled_count'),
+                DB::raw('AVG(product_amount * product_count) as average_value')
             )
             ->where('user_id', auth()->id())
             ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
@@ -41,6 +40,7 @@ class MyTransactions extends ChartWidget
         $completedCounts = [];
         $progressCounts = [];
         $pendingCounts = [];
+        $averageValues = [];
         
         // For the past 12 months
         $twelveMonthsAgo = Carbon::now()->subMonths(11);
@@ -54,6 +54,7 @@ class MyTransactions extends ChartWidget
             $completedCounts[] = $monthData ? (int)$monthData->completed_count : 0;
             $progressCounts[] = $monthData ? (int)$monthData->progress_count : 0;
             $pendingCounts[] = $monthData ? (int)$monthData->pending_count : 0;
+            $averageValues[] = $monthData ? round((float)$monthData->average_value) : 0;
         }
 
         return [
@@ -63,8 +64,10 @@ class MyTransactions extends ChartWidget
                     'data' => $totalAmounts,
                     'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
                     'borderColor' => 'rgb(54, 162, 235)',
-                    'borderWidth' => 2,
+                    'borderWidth' => 3,
+                    'borderRadius'=> 4,
                     'yAxisID' => 'y',
+                    'fill' => false,
                 ],
                 [
                     'label' => 'Completed Transactions',
@@ -74,6 +77,7 @@ class MyTransactions extends ChartWidget
                     'borderWidth' => 2,
                     'type' => 'line',
                     'yAxisID' => 'y1',
+                    'borderDash' => [5, 5],
                 ],
                 [
                     'label' => 'In Progress',
@@ -83,6 +87,7 @@ class MyTransactions extends ChartWidget
                     'borderWidth' => 2,
                     'type' => 'line',
                     'yAxisID' => 'y1',
+                    'borderDash' => [10, 5],
                 ],
                 [
                     'label' => 'Pending Transactions',
@@ -92,6 +97,7 @@ class MyTransactions extends ChartWidget
                     'borderWidth' => 2,
                     'type' => 'line',
                     'yAxisID' => 'y1',
+                    'borderDash' => [2, 5],
                 ],
             ],
             'labels' => $labels,
@@ -101,6 +107,8 @@ class MyTransactions extends ChartWidget
     protected function getOptions(): array
     {
         return [
+            'responsive' => true,
+            'maintainAspectRatio' => false,
             'scales' => [
                 'y' => [
                     'type' => 'linear',
@@ -108,10 +116,21 @@ class MyTransactions extends ChartWidget
                     'position' => 'left',
                     'title' => [
                         'display' => true,
-                        'text' => 'Transaction Value (IDR)'
+                        'text' => 'Transaction Value (IDR)',
+                        'font' => [
+                            'size' => 14,
+                            'weight' => 'bold'
+                        ]
                     ],
                     'ticks' => [
-                        'callback' => 'function(value) { return "Rp " + value.toLocaleString("id-ID"); }'
+                        'callback' => 'function(value) { 
+                            return "Rp " + value.toLocaleString("id-ID", {
+                                maximumFractionDigits: 0
+                            });
+                        }'
+                    ],
+                    'grid' => [
+                        'color' => 'rgba(0, 0, 0, 0.1)'
                     ]
                 ],
                 'y1' => [
@@ -120,29 +139,71 @@ class MyTransactions extends ChartWidget
                     'position' => 'right',
                     'title' => [
                         'display' => true,
-                        'text' => 'Transaction Count'
+                        'text' => 'Transaction Count',
+                        'font' => [
+                            'size' => 14,
+                            'weight' => 'bold'
+                        ]
                     ],
                     'grid' => [
                         'drawOnChartArea' => false,
                     ],
                 ],
+                'x' => [
+                    'grid' => [
+                        'color' => 'rgba(0, 0, 0, 0.1)'
+                    ]
+                ]
             ],
             'plugins' => [
+                'legend' => [
+                    'position' => 'top',
+                    'labels' => [
+                        'usePointStyle' => true,
+                        'padding' => 20,
+                        'font' => [
+                            'size' => 12
+                        ]
+                    ]
+                ],
                 'tooltip' => [
+                    'enabled' => true,
+                    'mode' => 'index',
+                    'intersect' => false,
+                    'backgroundColor' => 'rgba(0, 0, 0, 0.8)',
+                    'titleColor' => '#fff',
+                    'bodyColor' => '#fff',
+                    'titleFont' => [
+                        'size' => 14,
+                        'weight' => 'bold'
+                    ],
+                    'bodyFont' => [
+                        'size' => 13
+                    ],
+                    'padding' => 12,
                     'callbacks' => [
                         'label' => 'function(context) {
                             let label = context.dataset.label || "";
                             if (context.parsed.y !== null) {
                                 if (context.dataset.label.includes("Value")) {
-                                    return label + ": Rp " + context.parsed.y.toLocaleString("id-ID");
+                                    return label + ": Rp " + context.parsed.y.toLocaleString("id-ID", {
+                                        maximumFractionDigits: 0
+                                    });
                                 } else {
-                                    return label + ": " + context.parsed.y;
+                                    return label + ": " + context.parsed.y + " transactions";
                                 }
                             }
                             return label;
+                        }',
+                        'afterLabel' => 'function(context) {
+                            // This is where we could add additional information
                         }'
                     ]
                 ]
+            ],
+            'animation' => [
+                'duration' => 1000,
+                'easing' => 'easeOutQuart'
             ]
         ];
     }
