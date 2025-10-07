@@ -51,6 +51,7 @@ class OutcomesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('date_outcome', direction: 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])

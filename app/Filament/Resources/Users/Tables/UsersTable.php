@@ -30,6 +30,7 @@ class UsersTable
                     ->dateTime()
                     ->sortable(),
             ])
+            ->defaultSort('created_at', direction: 'desc')
             ->recordActions([
                 ViewAction::make(),
             ])

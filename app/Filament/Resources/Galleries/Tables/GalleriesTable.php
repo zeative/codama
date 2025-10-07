@@ -42,6 +42,7 @@ class GalleriesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', direction: 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])

@@ -83,6 +83,7 @@ class TransactionsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('order_date', direction: 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])

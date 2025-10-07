@@ -53,6 +53,7 @@ class DesignsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', direction: 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])
